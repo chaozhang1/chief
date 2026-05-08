@@ -16,6 +16,7 @@ interface Env {
   CHIEF_R2: R2Bucket;
   // Vars
   ENVIRONMENT: string;
+  OPENAI_API_KEY: string;
   ANTHROPIC_API_KEY: string;
   ELEVENLABS_API_KEY: string;
   GITHUB_OAUTH_CLIENT_ID: string;
