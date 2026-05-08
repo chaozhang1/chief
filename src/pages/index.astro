@@ -1,0 +1,94 @@
+---
+import "../styles/global.css";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="AI Chief of Staff for one-person companies. Knows your projects, remembers everything, asks the hard questions a co-founder would. Never your friend." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Chief — AI Chief of Staff for One-Person Companies</title>
+  </head>
+  <body class="bg-zinc-950 text-zinc-100 font-mono min-h-screen">
+    <main class="max-w-2xl mx-auto px-6 py-16">
+      <div class="space-y-12">
+        <header class="space-y-4">
+          <h1 class="text-3xl font-bold tracking-tight">Chief</h1>
+          <p class="text-lg text-zinc-400">
+            AI Chief of Staff for one-person companies.
+          </p>
+        </header>
+
+        <section class="space-y-4">
+          <p class="text-zinc-300">
+            You can't afford a $200K Chief of Staff. You also don't have
+            standup, weekly 1:1s, or anyone who remembers what you said
+            three weeks ago.
+          </p>
+          <p class="text-zinc-300">
+            Chief connects to your <strong class="text-zinc-100">GitHub</strong>,
+            <strong class="text-zinc-100">Stripe</strong>, and
+            <strong class="text-zinc-100">Calendar</strong>. It remembers
+            everything you tell it. It pings you on Friday if you didn't
+            ship what you said you would.
+          </p>
+          <p class="text-zinc-300">
+            <strong class="text-zinc-100">It is never your friend.</strong>
+            It is your work bench.
+          </p>
+        </section>
+
+        <section class="border border-zinc-800 rounded-md p-6 space-y-3">
+          <h2 class="text-sm font-bold uppercase tracking-wider text-zinc-500">
+            Status
+          </h2>
+          <p class="text-zinc-300">
+            🚧 Day 1 — building in public.
+          </p>
+          <p class="text-zinc-400 text-sm">
+            v0.1 ships in 6 weeks. First 100 signups get 1 year Pro free.
+          </p>
+        </section>
+
+        <section class="space-y-3">
+          <h2 class="text-sm font-bold uppercase tracking-wider text-zinc-500">
+            Get notified at launch
+          </h2>
+          <form class="flex gap-2" action="/api/waitlist" method="POST">
+            <input
+              type="email"
+              name="email"
+              required
+              placeholder="you@one-person-company.com"
+              class="flex-1 bg-zinc-900 border border-zinc-800 px-4 py-2 rounded text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-zinc-600"
+            />
+            <button
+              type="submit"
+              class="bg-zinc-100 text-zinc-900 px-6 py-2 rounded font-bold hover:bg-zinc-200"
+            >
+              Notify me
+            </button>
+          </form>
+          <p class="text-xs text-zinc-600">
+            We'll email once at v0.1. No spam. Read-only data, never sold,
+            never used to train any model.
+          </p>
+        </section>
+
+        <footer class="border-t border-zinc-800 pt-8 text-sm text-zinc-500 space-y-2">
+          <p>
+            Built by <a href="https://x.com/chaozhang" class="text-zinc-300 underline">chao zhang</a>
+            in public. Follow the journey on
+            <a href="https://github.com/chaozhang1/chief" class="text-zinc-300 underline">GitHub</a>.
+          </p>
+          <p>
+            Stack: Cloudflare Workers + Claude + ElevenLabs + D1.
+            Total infra cost: under $50/mo.
+          </p>
+        </footer>
+      </div>
+    </main>
+  </body>
+</html>
