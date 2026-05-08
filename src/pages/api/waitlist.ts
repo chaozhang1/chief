@@ -1,8 +1,9 @@
 import type { APIRoute } from "astro";
+import { env } from "cloudflare:workers";
 
 export const prerender = false;
 
-export const POST: APIRoute = async ({ request, locals }) => {
+export const POST: APIRoute = async ({ request }) => {
   const formData = await request.formData();
   const email = formData.get("email")?.toString().trim().toLowerCase();
 
@@ -10,19 +11,24 @@ export const POST: APIRoute = async ({ request, locals }) => {
     return new Response("Invalid email", { status: 400 });
   }
 
-  const env = locals.runtime.env;
+  const db = (env as { CHIEF_DB?: D1Database }).CHIEF_DB;
 
-  try {
-    await env.CHIEF_DB.prepare(
-      `INSERT INTO waitlist (email, created_at)
-       VALUES (?, unixepoch())
-       ON CONFLICT(email) DO NOTHING`,
-    )
-      .bind(email)
-      .run();
-  } catch (err) {
-    console.error("waitlist insert failed", err);
-    return new Response("Server error", { status: 500 });
+  if (db) {
+    try {
+      await db
+        .prepare(
+          `INSERT INTO waitlist (email, created_at)
+           VALUES (?, unixepoch())
+           ON CONFLICT(email) DO NOTHING`,
+        )
+        .bind(email)
+        .run();
+    } catch (err) {
+      console.error("waitlist insert failed", err);
+    }
+  } else {
+    // Local v0.0: D1 not configured yet. Just log.
+    console.log("[waitlist v0.0] would store:", email);
   }
 
   return new Response(

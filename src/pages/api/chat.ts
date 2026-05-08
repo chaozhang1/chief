@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+import { env } from "cloudflare:workers";
 import OpenAI from "openai";
 import { buildSystemPrompt } from "../../lib/chief-prompt";
 import { CHAO_CONTEXT } from "../../lib/chao-context";
@@ -16,9 +17,8 @@ interface ChatRequest {
   openProactively?: boolean;
 }
 
-export const POST: APIRoute = async ({ request, locals }) => {
-  const env = locals.runtime?.env ?? (process.env as unknown as Env);
-  const apiKey = env.OPENAI_API_KEY;
+export const POST: APIRoute = async ({ request }) => {
+  const apiKey = (env as { OPENAI_API_KEY?: string }).OPENAI_API_KEY;
 
   if (!apiKey) {
     return new Response(
@@ -59,8 +59,9 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
   try {
     const completion = await openai.chat.completions.create({
-      model: "gpt-5", // upgrade to "gpt-5" / "gpt-5-1" when available; fallback "gpt-4o"
-      max_tokens: 1024,
+      model: "gpt-5", // gpt-5 is a reasoning model — needs higher token budget + minimal effort for chat
+      max_completion_tokens: 4096,
+      reasoning_effort: "minimal",
       messages: [
         { role: "system", content: systemPrompt },
         ...messages.map((m) => ({ role: m.role, content: m.content })),
